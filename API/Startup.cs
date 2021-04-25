@@ -18,20 +18,26 @@ namespace API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)  // Our config gets injected here
+        private readonly IConfiguration _config;
+        public Startup(IConfiguration config)  // Our config gets injected here
         {
-            Configuration = configuration;
+            _config = config;
         }
 
-        public IConfiguration Configuration { get; }
+        // public Startup(IConfiguration configuration)  // Our config gets injected here
+        // {
+        //     Configuration = configuration;
+        // }
+
+        // public IConfiguration Configuration { get; }
 
         // "Dependency Injection container" This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //using lambda to pass an expression as a param
-            services.AddDbContext<DataContext>(options => 
+            //use lambda to pass an expression as a param
+            services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlite("Connection string that does nothing rn");
+                options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
             services.AddControllers();
             services.AddSwaggerGen(c =>
