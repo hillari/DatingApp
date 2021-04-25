@@ -23,7 +23,7 @@ namespace API
         {
             _config = config;
         }
-
+        // Different way to specify DI
         // public Startup(IConfiguration configuration)  // Our config gets injected here
         // {
         //     Configuration = configuration;
